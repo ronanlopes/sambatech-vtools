@@ -4,8 +4,8 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from myproject.myapp.models import Document
-from myproject.myapp.forms import DocumentForm
+from converter.models import Document
+from converter.forms import DocumentForm
 
 
 def index(request):
@@ -17,7 +17,7 @@ def index(request):
             newdoc.save()
 
             # Redirect to the document list after POST
-            return HttpResponseRedirect(reverse('converter.views.list'))
+            return HttpResponseRedirect(reverse('converter.views.index'))
     else:
         form = DocumentForm() # A empty, unbound form
 
@@ -28,4 +28,4 @@ def index(request):
     return render_to_response(
         'converter/index.html',
         {'documents': documents, 'form': form},
-        context_instance=RequestContext(request)
+        context_instance=RequestContext(request))

@@ -77,19 +77,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-
-
-# Parse database configuration from $DATABASE_URL
-import dj_database_url
-if ON_HEROKU:
-    DATABASE_URL = 'postgresql:///postgresql'
-else:
-    DATABASE_URL = 'sqlite://' + os.path.join(BASE_DIR, 'db.sqlite3')
-
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 
 # Database
@@ -97,12 +84,17 @@ DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_db',                      
+        'USER': 'django_login',                   
+        'PASSWORD': 'root',              
+        'HOST': 'localhost',                      
+        'PORT': '5432',           
     }
 }
 
 
+DATABASES['default'] =  dj_database_url.config()
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

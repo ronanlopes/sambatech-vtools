@@ -28,7 +28,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 't0b8z=48c9uikidl98b6t39-au**pi*zm-i!d_d6tl=o+r6ld#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'converter',
+    'storages',
+    'boto',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -82,20 +84,13 @@ USE_TZ = True
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+# we only need the engine name, as heroku takes care of the rest
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
     }
 }
 
-
-
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -105,3 +100,20 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+
+# # Allow all host hosts/domain names for this site
+ALLOWED_HOSTS = ['*']
+
+DATABASES['default'] =  dj_database_url.config(default='postgres://django_login:root@localhost/django_db')
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# try to load local_settings.py if it exists
+try:
+  from local_settings import *
+except Exception as e:
+  pass
+
+

@@ -1,1 +1,1 @@
-web: gunicorn sambatechvtools.wsgi
+web: gunicorn sambatechvtools.wsgi --log-file -

@@ -103,7 +103,7 @@ STATICFILES_DIRS = (
 
 
 # # Allow all host hosts/domain names for this site
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['sambatechvtools.herokuapp.com']
 
 DATABASES['default'] =  dj_database_url.config(default='postgres://django_login:root@localhost/django_db')
 

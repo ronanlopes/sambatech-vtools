@@ -29,7 +29,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 't0b8z=48c9uikidl98b6t39-au**pi*zm-i!d_d6tl=o+r6ld#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -117,4 +117,13 @@ try:
   from local_settings import *
 except Exception as e:
   pass
+
+
+if not DEBUG:
+   AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+   AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+   AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+   STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+   S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+   STATIC_URL = S3_URL
 

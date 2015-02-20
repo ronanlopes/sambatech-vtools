@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'sambatechvtools.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-
+    url(r'^s3direct/', include('s3direct.urls')),
     url(r'^$', 'sambatechvtools.views.index'),
     url(r'^converter/', include('converter.urls')),
     #url(r'^admin/', include(admin.site.urls)),

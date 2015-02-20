@@ -4,6 +4,7 @@ argparse==1.2.1
 boto==2.36.0
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-s3direct==0.3.9
 django-storages==1.1.8
 django-toolbelt==0.0.1
 ecdsa==0.13

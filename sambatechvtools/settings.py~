@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import dj_database_url
+import boto
 
 ON_HEROKU = os.environ.get('ON_HEROKU')
 HEROKU_SERVER = os.environ.get('HEROKU_SERVER')
@@ -47,6 +48,7 @@ INSTALLED_APPS = (
     'converter',
     'storages',
     'boto',
+    's3direct',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,11 +118,10 @@ try:
 except Exception as e:
   pass
 
-AWS_QUERYSTRING_AUTH = False
+#Storage on S3 settings are stored as os.environs to keep settings.py clean
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-MEDIA_URL = 'http://%s.s3.amazonaws.com/media/documents/' % AWS_STORAGE_BUCKET_NAME
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
-
-
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = S3_URL
